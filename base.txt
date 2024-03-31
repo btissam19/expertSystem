@@ -1,0 +1,16 @@
+Black Screen: Motherboard
+No Beep at Startup: Motherboard
+Computer Overheating: Cooling Problem
+Loud Fan Noise: Cooling Problem
+No Display: Graphics Card Problem
+Startup Beeps: Graphics Card Problem
+Extreme Slowness: Hard Drive Problem
+Clicking Hard Drive: Hard Drive Problem
+Flashing Screen: No Sound: Power Supply Problem
+Flashing Screen: Power Supply Problem
+Programs Closing Abruptly: RAM Problem
+Frequent Blue Screens: RAM Problem
+Undetected Mouse: Input Devices Problem
+Non-functional Keyboard: Input Devices Problem
+Unstable Internet Connection: Network Card Problem
+Web Pages Not Loading: Network Card Problem

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert System - PC Diagnostic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #diagnostic_frame {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 300px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result_label {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Expert System - PC Diagnostic</h1>
+
+    <div id="diagnostic_frame">
+        <label for="symptoms_listbox">List of Symptoms:</label>
+        <br>
+        <select id="symptoms_listbox" multiple size="5">
+            {% for regle in base_de_regles %}
+                <option value="{{ loop.index }}">{{ regle.conditions | join(', ') }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <button onclick="diagnose()">Perform Diagnosis</button>
+        <br><br>
+        <div id="result_label"></div>
+    </div>
+
+    <script>
+        function diagnose() {
+            const symptomsListbox = document.getElementById('symptoms_listbox');
+            const selectedIndices = Array.from(symptomsListbox.selectedOptions).map(option => option.value);
+    
+            if (selectedIndices.length === 0) {
+                document.getElementById('result_label').innerText = "Please select at least one symptom.";
+                return;
+            }
+    
+            fetch('/diagnose', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selected_indices: selectedIndices })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result_label').innerText = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
